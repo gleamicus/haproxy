@@ -19,6 +19,7 @@
 
 default['haproxy']['conf_cookbook'] = "haproxy"
 default['haproxy']['conf_template_source'] = "haproxy.cfg.erb"
+
 default['haproxy']['user'] = "haproxy"
 default['haproxy']['group'] = "haproxy"
 
@@ -71,7 +72,12 @@ default['haproxy']['frontend_max_connections'] = 2000
 default['haproxy']['frontend_ssl_max_connections'] = 2000
 
 default['haproxy']['install_method'] = 'package'
-default['haproxy']['conf_dir'] = '/etc/haproxy'
+case node.platform
+when "freebsd"
+  default['haproxy']['conf_dir'] = "/usr/local/etc/haproxy"
+else
+  default['haproxy']['conf_dir'] = "/etc/haproxy"
+end
 
 default['haproxy']['source']['version'] = '1.4.22'
 default['haproxy']['source']['url'] = 'http://haproxy.1wt.eu/download/1.4/src/haproxy-1.4.22.tar.gz'
