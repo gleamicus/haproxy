@@ -19,10 +19,14 @@
 
 include_recipe "haproxy::install_#{node['haproxy']['install_method']}"
 
-cookbook_file "/etc/default/haproxy" do
+directory File.dirname(node['haproxy']['defaults_file']) do
+  recursive true
+end
+
+cookbook_file node['haproxy']['defaults_file'] do
   source "haproxy-default"
-  owner "root"
-  group "root"
+  owner node['root_user']
+  group node['root_group']
   mode 00644
   notifies :restart, "service[haproxy]", :delayed
 end

@@ -75,8 +75,10 @@ default['haproxy']['install_method'] = 'package'
 case node.platform
 when "freebsd"
   default['haproxy']['conf_dir'] = "/usr/local/etc/haproxy"
+  default['haproxy']['defaults_file'] = "/usr/local/etc/rc.conf.d/haproxy"
 else
   default['haproxy']['conf_dir'] = "/etc/haproxy"
+  default['haproxy']['defaults_file'] = "/etc/default/haproxy"
 end
 
 default['haproxy']['source']['version'] = '1.4.22'

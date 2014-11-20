@@ -21,12 +21,21 @@ package "haproxy" do
   version node['haproxy']['package']['version'] if node['haproxy']['package']['version']
 end
 
+group node['haproxy']['group'] do
+  system true
+end
+
+user node['haproxy']['user'] do
+  group node['haproxy']['group']
+  system true
+end
+
 directory node['haproxy']['conf_dir']
 
 template "/etc/init.d/haproxy" do
   source "haproxy-init.erb"
-  owner "root"
-  group "root"
+  owner node['root_user']
+  group node['root_group']
   mode 00755
   variables(
     :hostname => node['hostname'],

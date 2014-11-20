@@ -1,0 +1,2 @@
+haproxy_enable=YES
+haproxy_config=/usr/local/etc/haproxy/haproxy.cfg

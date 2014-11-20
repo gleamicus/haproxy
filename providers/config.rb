@@ -12,8 +12,8 @@ def install_haproxy_config
   template "#{new_resource.conf_dir}/haproxy.cfg" do
     cookbook new_resource.conf_cookbook
     source new_resource.conf_template_source
-    owner "root"
-    group "root"
+    owner node['root_user']
+    group node['root_group']
     mode 00644
     variables(
       :defaults_options => defaults_options,

@@ -42,10 +42,11 @@ def haproxy_default_file
   cookbook_file '/etc/default/haproxy' do
     source 'haproxy-default'
     cookbook 'haproxy'
-    owner 'root'
-    group 'root'
+    owner node['root_user']
+    group node['root_group']
     mode 00644
     notifies :restart, 'service[haproxy]', :delayed
+    not_if { node.platform == 'freebsd' }
   end
 end
 
@@ -53,8 +54,8 @@ def create_haproxy_cfg
   template ::File.join(new_resource.config_directory, 'haproxy.cfg') do
     source 'haproxy.dynamic.cfg.erb'
     cookbook 'haproxy'
-    owner 'root'
-    group 'root'
+    owner node['root_user']
+    group node['root_group']
     mode 00644
     notifies :reload, 'service[haproxy]', :delayed
     variables(:config => new_resource.config)

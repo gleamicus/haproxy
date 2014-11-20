@@ -87,8 +87,8 @@ directory node['haproxy']['conf_dir']
 
 template "/etc/init.d/haproxy" do
   source "haproxy-init.erb"
-  owner "root"
-  group "root"
+  owner node['root_user']
+  group node['root_group']
   mode 00755
   variables(
     :hostname => node['hostname'],
