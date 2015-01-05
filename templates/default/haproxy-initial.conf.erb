@@ -1,0 +1,15 @@
+global
+    maxconn 2048
+    user <%= node['haproxy']['user'] %>
+    group <%= node['haproxy']['group'] %>
+    daemon
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+listen http-in
+    bind <%= node['haproxy']['incoming_address'] %>:<%= node['haproxy']['incoming_port'] %>
+    balance roundrobin
+    server web0 192.168.100.200:80 maxconn 1024 check
+    server web1 192.168.100.201:80 maxconn 1024 check

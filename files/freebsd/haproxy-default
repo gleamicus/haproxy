@@ -1,2 +1,4 @@
 haproxy_enable=YES
+pidfile="/var/run/haproxy.pid"
 haproxy_config=/usr/local/etc/haproxy/haproxy.cfg
+haproxy_flags="-D -q -f ${haproxy_config} -p ${pidfile}"

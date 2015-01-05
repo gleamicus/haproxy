@@ -39,14 +39,13 @@ def create_haproxy_etc_directory
 end
 
 def haproxy_default_file
-  cookbook_file '/etc/default/haproxy' do
+  cookbook_file default['haproxy']['defaults_file'] do
     source 'haproxy-default'
     cookbook 'haproxy'
     owner node['root_user']
     group node['root_group']
     mode 00644
     notifies :restart, 'service[haproxy]', :delayed
-    not_if { node.platform == 'freebsd' }
   end
 end
 

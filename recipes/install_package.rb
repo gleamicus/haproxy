@@ -21,16 +21,28 @@ package "haproxy" do
   version node['haproxy']['package']['version'] if node['haproxy']['package']['version']
 end
 
-group node['haproxy']['group'] do
-  system true
+if node.platform == "freebsd"
+  group node['haproxy']['group'] do
+    system true
+  end
+
+  user node['haproxy']['user'] do
+    group node['haproxy']['group']
+    system true
+  end
+
+  template '/usr/local/etc/haproxy.conf' do
+    source 'haproxy-initial.conf.erb'
+  end
 end
 
-user node['haproxy']['user'] do
-  group node['haproxy']['group']
-  system true
+directory node['haproxy']['conf_dir'] do
+  recursive true
 end
 
-directory node['haproxy']['conf_dir']
+directory File.dirname(node['haproxy']['defaults_file']) do
+  recursive true
+end
 
 template "/etc/init.d/haproxy" do
   source "haproxy-init.erb"
