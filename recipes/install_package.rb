@@ -24,7 +24,8 @@ end
 directory node['haproxy']['conf_dir']
 
 template "/etc/init.d/haproxy" do
-  source "haproxy-init.erb"
+  source node['haproxy']['init_template_source']
+  cookbook node['haproxy']['init_cookbook']
   owner "root"
   group "root"
   mode 00755

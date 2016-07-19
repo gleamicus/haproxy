@@ -19,6 +19,9 @@
 
 default['haproxy']['conf_cookbook'] = "haproxy"
 default['haproxy']['conf_template_source'] = "haproxy.cfg.erb"
+default['haproxy']['init_cookbook'] = "haproxy"
+default['haproxy']['init_template_source'] = "haproxy-init.erb"
+
 default['haproxy']['user'] = "haproxy"
 default['haproxy']['group'] = "haproxy"
 
